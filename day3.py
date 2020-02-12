@@ -31,7 +31,7 @@ def get_wire_lines(wire):
             wire_path.append(l)
     return wire_path
 
-def line_intersection(line1, line1):
+def line_intersection(line1, line2):
     xdiff = (line1.start[0] - line1.end[0], line2.start[0] - line2.end[0])
     ydiff = (line1.start[1] - line1.end[1], line2.start[1] - line2.end[1])
 
@@ -39,20 +39,25 @@ def line_intersection(line1, line1):
         return a[0] * b[1] - a[1] * b[0]
 
     div = det(xdiff, ydiff)
-    if not div == 0:
-        d = (det(line1.start, line1.end), det(line2.start, line2.end))
-        x = det(d, xdiff) / div
-        y = det(d, ydiff) / div
-        return x, y
+    if div == 0.0:
+        return False
+
+    d = (det(line1.start, line1.end), det(line2.start, line2.end))
+    x = det(d, xdiff) / div
+    y = det(d, ydiff) / div
+    return (x, y)
 
 def compute_crossing(wire1, wire2):
-    
+    for x in wire1:
+        for y in wire2:
+            h = line_intersection(x,y)
+            if h:
+                print(h)
+
 w = get_wire_lines(wire1)
-print(w[1].end)
-print(w[2].end)
+w2 = get_wire_lines(wire2)
 
-
-
+compute_crossing(w, w2)
 
 
 
