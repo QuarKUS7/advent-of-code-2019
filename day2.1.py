@@ -1,5 +1,5 @@
 import copy
-from day2 import intcode
+from day2 import IntCode
 
 with open('./input/day2', 'r') as f:
     raw = f.read()
@@ -11,7 +11,8 @@ for i in range(100):
         input = copy.deepcopy(raw)
         input[1]=i
         input[2]=j
-        if intcode(input) == 19690720:
+        intcode = IntCode(input)
+        if intcode.process() == 19690720:
             print((i,j))
             break
     else:

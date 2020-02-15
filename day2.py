@@ -1,19 +1,21 @@
+class IntCode:
+    def __init__(self, input):
+        self.input = input
 
-def intcode(input):
+    def process(self):
+        counter=0
 
-    counter=0
+        while True:
+            o,a,b,c = self.input[counter],self.input[counter+1],self.input[counter+2],self.input[counter+3]
+            if o == 99:
+                break
+            if o == 1:
+                self.input[c] = self.input[a] + self.input[b]
+            elif o == 2:
+                self.input[c] = self.input[a] * self.input[b]
+            counter = counter + 4
 
-    while True:
-        o,a,b,c = input[counter],input[counter+1],input[counter+2],input[counter+3]
-        if o == 99:
-            break
-        if o == 1:
-            input[c] = input[a] + input[b]
-        elif o == 2:
-            input[c] = input[a] * input[b]
-        counter = counter + 4
-
-    return input[0]
+        return self.input[0]
 
 if  __name__== '__main__':
     with open('./input/day2', 'r') as f:
@@ -24,6 +26,7 @@ if  __name__== '__main__':
 
     input[1]=12
     input[2]=2
-    output = intcode(input)
+    intcode = IntCode(input)
+    output = intcode.process()
 
     print(output)

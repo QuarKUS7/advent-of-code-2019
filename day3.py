@@ -2,8 +2,6 @@ with open('./input/day3', 'r') as f:
     input = f.read().splitlines()
 wire1 = input[0].split(',')
 wire2 = input[1].split(',')
-print(wire1)
-print(wire2)
 
 class Line:
     def __init__(self, X, Y, Z):
@@ -14,7 +12,7 @@ class Line:
 def get_wire_lines(wire):
     beg = (0, 0)
     wire_path = []
-    wire_path.append(Line((0,0),(0,0),(0,0)))
+    wire_path.append(Line((0,0),(0,0),0))
     for i in wire:
         last_point = wire_path[-1]
         if i[0] == 'R':
@@ -32,32 +30,34 @@ def get_wire_lines(wire):
     return wire_path
 
 def line_intersection(line1, line2):
-    xdiff = (line1.start[0] - line1.end[0], line2.start[0] - line2.end[0])
-    ydiff = (line1.start[1] - line1.end[1], line2.start[1] - line2.end[1])
+    if (line1.start[1] == line1.end[1]
+        and line2.start[0] == line2.end[0]
+        and line1.start[0] <= line2.start[0] <= line1.end[0]
+        and line2.start[1] <= line1.start[1] <= line2.end[1]
+        ):
+            return (line2.start[0], line1.start[1])
+    if (line1.start[0] == line1.end[0]
+        and line2.start[1] == line2.end[1]
+        and line1.start[1] <= line2.start[1] <= line1.end[1]
+        and line2.start[0] <= line1.start[0] <= line2.end[0]
+        ):
+            return (line2.start[0], line1.start[1])
 
-    def det(a, b):
-        return a[0] * b[1] - a[1] * b[0]
-
-    div = det(xdiff, ydiff)
-    if div == 0.0:
-        return False
-
-    d = (det(line1.start, line1.end), det(line2.start, line2.end))
-    x = det(d, xdiff) / div
-    y = det(d, ydiff) / div
-    return (x, y)
-
-def compute_crossing(wire1, wire2):
+def compute_nearest_crossing(wire1, wire2):
+    mini_hm = 9999999
     for x in wire1:
         for y in wire2:
             h = line_intersection(x,y)
-            if h:
-                print(h)
+            if h and h != (0,0):
+                hm = abs(h[0]) + abs(h[1])
+                if hm < mini_hm:
+                    mini_hm = hm
+    print(mini_hm)
 
 w = get_wire_lines(wire1)
 w2 = get_wire_lines(wire2)
 
-compute_crossing(w, w2)
+compute_nearest_crossing(w, w2)
 
 
 
