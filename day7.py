@@ -31,8 +31,7 @@ def intcode(inpt, signal, start):
             return inpt[a]
             counter+=2
         else:
-            print("Unknown o")
-
+            break
 
 
 if  __name__== '__main__':
@@ -41,13 +40,18 @@ if  __name__== '__main__':
     input = eval(input)
     input = list(input)
     min_amp_out = 0
-    #for i in permutations([0,1,2,3,4], 5):
-    for i in [(4,3,2,1,0)]:
+    import copy
+    for i in permutations([0,1,2,3,4], 5):
         print(i)
         amp_out = 0
         for j in i:
-            amp_out = intcode(input, i[0], amp_out)
+            print(j)
+            copy_input = copy.deepcopy(input)
+            amp_out = intcode(copy_input, int(j), amp_out)
             print(amp_out)
+        if not amp_out:
+            continue
         if amp_out > min_amp_out:
             min_amp_out = amp_out
     print(min_amp_out)
+    print(input)
