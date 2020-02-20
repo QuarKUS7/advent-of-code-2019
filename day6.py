@@ -1,4 +1,3 @@
-from collections import defaultdict
 
 if  __name__== '__main__':
     with open('./input/day6', 'r') as f:
