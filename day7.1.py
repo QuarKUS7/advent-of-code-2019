@@ -9,7 +9,6 @@ def intcode(inpt, signal, start):
         instruction = '{0:05d}'.format(inpt[counter])
         o, modes = instruction[-2:], instruction[:-2]
         if o == '99':
-            print(inpt[0])
             break
         if o == '01':
             a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
@@ -30,6 +29,7 @@ def intcode(inpt, signal, start):
             counter+=2
         elif o == '04':
             a = inpt[counter+1]
+            print(inpt[a])
             return inpt[a]
             counter+=2
         elif o == '05':
@@ -81,12 +81,10 @@ if  __name__== '__main__':
         amp_out = 0
         copy_input = copy.deepcopy(input)
         while True:
-            print(amp_out)
             for j in i:
                 amp_out = intcode(copy_input, int(j), amp_out)
                 if not amp_out:
                     continue
-            break
         if amp_out > min_amp_out:
             min_amp_out = amp_out
     print(min_amp_out)
