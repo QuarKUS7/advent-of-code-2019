@@ -92,8 +92,8 @@ if  __name__== '__main__':
     with open('./input/day9', 'r') as f:
         input = f.read()
     input = eval(input)
-    input = list(input) + [0] * 100
+    input = list(input) + [0] * 100000
     min_amp_out = 0
     max_out = 0
     amp0 = Amplifier(1, input)
-    amp0.run_intcode(1)
+    amp0.run_intcode(2)
