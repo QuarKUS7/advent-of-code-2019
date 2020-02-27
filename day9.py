@@ -8,6 +8,14 @@ class Amplifier:
         self.inpt = inpt
         self.counter = 0
 
+    def find_value(self, mode, param):
+        if mode == '0':
+            return self.inpt[param]
+        elif mode == '1':
+            return param
+        elif mode == '2':
+            return self.inpt[self.relative_base + param]
+
     def run_intcode(self, start):
         inpt = self.inpt
         counter =  self.counter
@@ -18,67 +26,82 @@ class Amplifier:
                 self.halted = True
                 break
             if o == '01':
-                a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                c = inpt[counter+3]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                b = self.find_value(modes[-2], inpt[counter+2])
+                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
+                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
+                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
+                #c = inpt[counter+3]
                 inpt[c] = a + b
                 counter+= 4
             elif o == '02':
-                a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                c = inpt[counter+3]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                b = self.find_value(modes[-2], inpt[counter+2])
+                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
+                import pdb; pdb.set_trace();
+                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
+                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
+                #c = inpt[counter+3]
                 inpt[c] = a * b
                 counter+= 4
             elif o == '03':
-                a = inpt[counter+1]
-                if self.first:
-                    inpt[a] = self.signal
-                    self.first = False
-                else:
-                    inpt[a] = start
+                a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[counter+1]
+                #a = inpt[counter+1]
+                inpt[a] = start
                 counter+=2
             elif o == '04':
-                a = inpt[counter+1]
+                a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[counter+1]
+                import pdb; pdb.set_trace();
+                #a = inpt[counter+1]
                 counter+=2
-                self.counter = counter
-                print(inpt[a])
-                return inpt[a]
+                print(a)
             elif o == '05':
-                a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                b = self.find_value(modes[-2], inpt[counter+2])
+                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
+                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
                 if a != 0:
                     counter = b
                 else:
                     counter+=3
             elif o == '06':
-                a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                b = self.find_value(modes[-2], inpt[counter+2])
+                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
+                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
                 if a == 0:
                     counter = b
                 else:
                     counter+=3
             elif o == '07':
-                a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                c = inpt[counter+3]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                b = self.find_value(modes[-2], inpt[counter+2])
+                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
+                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
+                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
+                #c = inpt[counter+3]
                 if a < b:
                     inpt[c] = 1
                 else:
                     inpt[c] = 0
                 counter+=4
             elif o == '08':
-                a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                c = inpt[counter+3]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                b = self.find_value(modes[-2], inpt[counter+2])
+                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
+                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
+                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
+                #c = inpt[counter+3]
                 if a == b:
                     inpt[c] = 1
                 else:
                     inpt[c] = 0
                 counter+=4
             elif o == '09':
-                a = inpt[counter+1]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                #a = inpt[counter+1]
                 self.relative_base+= a
-                print(a)
+                counter+=2
             else:
                 print(o)
                 break
