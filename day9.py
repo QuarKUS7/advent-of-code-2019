@@ -28,40 +28,28 @@ class Amplifier:
             if o == '01':
                 a = self.find_value(modes[-1], inpt[counter+1])
                 b = self.find_value(modes[-2], inpt[counter+2])
-                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
-                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                #c = inpt[counter+3]
+                c = self.relative_base + inpt[counter+3] if modes[-3] == '2' else inpt[counter+3]
                 inpt[c] = a + b
 
                 counter+= 4
             elif o == '02':
                 a = self.find_value(modes[-1], inpt[counter+1])
                 b = self.find_value(modes[-2], inpt[counter+2])
-                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
-                #import pdb; pdb.set_trace();
-                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                #c = inpt[counter+3]
+                c = self.relative_base + inpt[counter+3] if modes[-3] == '2' else inpt[counter+3]
                 inpt[c] = a * b
                 counter+= 4
             elif o == '03':
-                a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[counter+1]
+                a = self.relative_base + inpt[counter+1] if modes[-1] == '2' else inpt[counter+1]
                 #a = inpt[counter+1]
                 inpt[a] = start
                 counter+=2
             elif o == '04':
                 a = self.find_value(modes[-1], inpt[counter+1])
-                #a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[inpt[counter+1]]
-                #import pdb; pdb.set_trace();
-                #a = inpt[counter+1]
                 counter+=2
                 print(a)
             elif o == '05':
                 a = self.find_value(modes[-1], inpt[counter+1])
                 b = self.find_value(modes[-2], inpt[counter+2])
-                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
                 if a != 0:
                     counter = b
                 else:
@@ -69,8 +57,6 @@ class Amplifier:
             elif o == '06':
                 a = self.find_value(modes[-1], inpt[counter+1])
                 b = self.find_value(modes[-2], inpt[counter+2])
-                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
                 if a == 0:
                     counter = b
                 else:
@@ -78,10 +64,7 @@ class Amplifier:
             elif o == '07':
                 a = self.find_value(modes[-1], inpt[counter+1])
                 b = self.find_value(modes[-2], inpt[counter+2])
-                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
-                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                #c = inpt[counter+3]
+                c = self.relative_base + inpt[counter+3] if modes[-3] == '2' else inpt[counter+3]
                 if a < b:
                     inpt[c] = 1
                 else:
@@ -90,10 +73,7 @@ class Amplifier:
             elif o == '08':
                 a = self.find_value(modes[-1], inpt[counter+1])
                 b = self.find_value(modes[-2], inpt[counter+2])
-                c = inpt[self.relative_base + inpt[counter+3]] if modes[-3] == '2' else inpt[counter+3]
-                #a = inpt[inpt[counter+1]] if modes[-1] == '0' else inpt[counter+1]
-                #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
-                #c = inpt[counter+3]
+                c = self.relative_base + inpt[counter+3] if modes[-3] == '2' else inpt[counter+3]
                 if a == b:
                     inpt[c] = 1
                 else:
