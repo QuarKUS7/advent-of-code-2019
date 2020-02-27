@@ -51,7 +51,8 @@ class Amplifier:
                 inpt[a] = start
                 counter+=2
             elif o == '04':
-                a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[inpt[counter+1]]
+                a = self.find_value(modes[-1], inpt[counter+1])
+                #a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[inpt[counter+1]]
                 import pdb; pdb.set_trace();
                 #a = inpt[counter+1]
                 counter+=2
