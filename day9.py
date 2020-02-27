@@ -33,6 +33,7 @@ class Amplifier:
                 #b = inpt[inpt[counter+2]] if modes[-2] == '0' else inpt[counter+2]
                 #c = inpt[counter+3]
                 inpt[c] = a + b
+
                 counter+= 4
             elif o == '02':
                 a = self.find_value(modes[-1], inpt[counter+1])
@@ -50,7 +51,7 @@ class Amplifier:
                 inpt[a] = start
                 counter+=2
             elif o == '04':
-                a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[counter+1]
+                a = inpt[self.relative_base + inpt[counter+1]] if modes[-1] == '2' else inpt[inpt[counter+1]]
                 import pdb; pdb.set_trace();
                 #a = inpt[counter+1]
                 counter+=2
