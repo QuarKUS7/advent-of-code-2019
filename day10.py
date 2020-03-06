@@ -41,12 +41,15 @@ def get_ratios(map, base, aster_count=0):
 
 def solution(asteroids):
     max_asters = 0
+    best_base = None
     for base in asteroids:
         acter_count, asteroids_list = get_ratios(asteroids, base)
         acter_count+= len(set(asteroids_list))
         if acter_count > max_asters:
             max_asters = acter_count
+            best_base = base
     print(max_asters)
+    print(best_base.x, best_base.y)
 
 def generate_map(input):
     aster_map = []
@@ -61,7 +64,4 @@ if __name__ == '__main__':
         input = f.read().splitlines()
     asteroids = generate_map(input)
     solution(asteroids)
-
-
-
 
